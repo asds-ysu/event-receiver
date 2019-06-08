@@ -1,0 +1,15 @@
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+# Start ZooKeeper Server
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+# Start Kafka Server
+bin/kafka-server-start.sh config/server.properties
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+.\bin\kafka-topics.sh --zookeeper localhost:2181 --delete --topic remove-me
+
