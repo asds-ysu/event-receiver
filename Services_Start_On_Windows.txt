@@ -1,7 +1,0 @@
-zkserver
-.\bin\windows\kafka-server-start.bat .\config\server.properties
-node json_nodejs_kafka.js
-curl -H "Content-Type: application/json" -d '{"username":"xyz","password":"xyz"}' http://localhost:8125/upload
-
-curl -H "Content-Type: application/json" -d '{"timestamp": "1558162385","user_id": "81381707-bd03-4920-9a93-9829cbad33a4","session_id": "9c471d8f-2c9f-456f-865b-04034d2ecae3","action": "my_sample_action","params": {"param1": "value2","param2": "4"},"country": "AM", "url": "http://sendmoneyarmenia.am/s/?page_id=50"}' http://localhost:8125/upload
-

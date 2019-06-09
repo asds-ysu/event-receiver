@@ -1,0 +1,11 @@
+{
+    "timestamp": 1558162385,
+    "user_id": "81381707-bd03-4920-9a93-9829cbad33a4",
+    "session_id": "9c471d8f-2c9f-456f-865b-04034d2ecae3",
+    "action": "my_sample_action",
+    "params": {
+        "param1": "value2",
+        "param2": "4"
+    },
+    "url": "http://sendmoneyarmenia.am/s/?page_id=50"
+}
