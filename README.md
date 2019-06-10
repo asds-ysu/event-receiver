@@ -10,14 +10,18 @@ https://nodejs.org/en/download/
 
 Now as you have installed all necessary services you can start them by the following commands:
 
-// start zookeeper
+## start zookeeper
 zkserver
 
-// start kafka
+## start kafka
 .\bin\windows\kafka-server-start.bat .\config\server.properties
 
-// start nodeJS server
+## start nodeJS server
 node json_nodejs_kafka.js
 
-// test server
+or for multiprocessing you can use:
+
+pm2 reload ecosystem.config.js
+
+## test server
 curl -d @request.json --header "Content-Type: application/json" http://localhost:8125/upload

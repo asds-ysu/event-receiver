@@ -5,8 +5,11 @@ const extractDomain = require('extract-domain');
 const geoip = require('geoip-lite');
 const http=require('http');
 
-const kafka = require('kafka-node');
-const config = require('./config');
+// var kafka = require('kafka-node'),
+// 	Client = kafka.KafkaClient,
+// 	Producer = kafka.Producer,
+// 	client = new Client('kafka:2181'),
+// 	producer = new Producer(client);
 
 const request = {
         hostname: 'localhost',
@@ -29,6 +32,11 @@ const pattern = {
 
 http.createServer(function(request, response)
 {
+	var kafka = require('kafka-node'),
+				Client = kafka.KafkaClient,
+				Producer = kafka.Producer,
+				client = new Client('kafka:2181'),
+				producer = new Producer(client);
 
     response.writeHeader(200, {"Content-Type": "application/json"});
 
@@ -45,46 +53,37 @@ http.createServer(function(request, response)
             //          request.socket.remoteAddress ||
             //          request.connection.socket.remoteAddress;
  
-            var ip = "207.97.227.239";
+            // var ip = "207.97.227.239";
+            var ip = '37.252.92.227'
             // var ip = "192.168.0.103"
             var geo = geoip.lookup(ip);
 
             json_request['country'] = geo.country
 
-            const Producer = kafka.Producer;
-            const Client = kafka.KafkaClient;
-			const client = new Client(config.kafka_server);
-			const producer = new Producer(client);
+    //         var kafka = require('kafka-node'),
+				// Client = kafka.KafkaClient,
+				// Producer = kafka.Producer,
+				// client = new Client('kafka:2181'),
+				// producer = new Producer(client);
 
-			let payloads = [
-				{
-				topic: config.kafka_topic,
-				messages: json_request.toString('utf8'),
-				partition: 0
-				}
-			];
+            payloads = [
+                // { topic: 'bigDataProjectTopic', messages: json_request.toString('utf8'), partition: 0 },
+                { topic: 'bigDataProjectTopic', messages: json_request, partition: 0 },
+            ];
 
-			producer.on('ready', async function() {
-			  let push_status = producer.send(payloads, (err, data) => {
-			    if (err) {
-			      console.log('[kafka-producer -> '+config.kafka_topic+']: broker update failed');
-			    } else {
-			      console.log('[kafka-producer -> '+config.kafka_topic+']: broker update success');
-			    }
-			  });
-			});
-			
-			producer.on('error', function(err) {
-			  console.log(err);
-			  console.log('[kafka-producer -> '+kafka_topic+']: connection errored');
-			  throw err;
-			});		
+            producer.on('ready', function(){
+                producer.send(payloads, function(err, data){
+                        console.log(data)
+                });
+            });
 
             console.log(json_request)
         }
         else{
             console.log('bad json request')
         }
+
+        producer.on('error', function(err){})
 
     });
 
