@@ -15,7 +15,7 @@ var request = {
         hostname: 'localhost',
         port: 8125,
         path: '/upload',
-        method: 'GET'
+        method: 'POST'
 };
 
 var pattern = {
@@ -71,7 +71,6 @@ http.createServer(function(request, response)
             });
 
             console.log(json_request)
-
         }
         else{
             console.log('bad json request')
